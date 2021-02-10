@@ -34,7 +34,6 @@ public class Lesson2RegEx {
             try (Scanner scanner = new Scanner(file)) {
                 scanner.useDelimiter("\\Z");
                 data = scanner.next();
-
             }
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
