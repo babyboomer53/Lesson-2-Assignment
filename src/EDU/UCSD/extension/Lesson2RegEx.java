@@ -2,9 +2,10 @@ package EDU.UCSD.extension;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lesson2RegEx {
 
@@ -47,19 +48,33 @@ public class Lesson2RegEx {
 
         list_Of_PANIDs(data);
         list_Of_MAC_Addresses(data);
-        list_Of_RF_RSSI_M_Values(data);
-        
+        // list_Of_RF_RSSI_M_Values(data);
+
     }
 
     private static void list_Of_RF_RSSI_M_Values(String data) {
-        System.out.println(data);
+        System.out.println("Not yet implemented");
     }
 
     private static void list_Of_MAC_Addresses(String data) {
-        System.out.println(data);
+        final String MACaddress = "\\b(?iU:[0-9a-f]{16})\\b";
+        Pattern pattern = Pattern.compile(MACaddress);
+        System.out.printf("- List of MAC addresses (Total of %d): %n",
+                pattern.matcher(data).results().map(MatchResult::group).count());
+        pattern.matcher(data)
+                .results()
+                .map(MatchResult::group)
+                .forEach(System.out::println);
     }
 
     private static void list_Of_PANIDs(String data) {
-        System.out.println(data);
+        final String PANID = "(PANID)\\s+(=)\\s+([0-9a-f]{4})";
+        Pattern pattern = Pattern.compile(PANID);
+        System.out.printf("- List of PAN IDs (Total of %d): %n",
+                pattern.matcher(data).results().map(MatchResult::group).count());
+        pattern.matcher(data)
+                .results()
+                .map(MatchResult::group)
+                .forEach(System.out::println);
     }
 }

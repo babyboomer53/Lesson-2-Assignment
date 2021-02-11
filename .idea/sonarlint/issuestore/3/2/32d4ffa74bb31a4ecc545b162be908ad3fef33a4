@@ -1,8 +1,5 @@
 
+o	java:S1008"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Èä¶øşÿÿÿÿ8µ­Óø.
+j	java:S100<"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡¬¡8áİ¯Óø.
+i	java:S1004"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üÂœ?8ØêíÒø.
 o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ø°³î
-K
-java:S1481")Remove this unused "data" local variable.(÷ıÑåøÿÿÿÿ8´ûñÎø.
-R
-java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8²Ì’Ïø.
-M
-java:S1128"0Remove this unused import 'java.io.InputStream'.(¹»º8²Ì’Ïø.
