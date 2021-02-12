@@ -48,12 +48,20 @@ public class Lesson2RegEx {
 
         list_Of_PANIDs(data);
         list_Of_MAC_Addresses(data);
-        // list_Of_RF_RSSI_M_Values(data);
+        list_Of_RF_RSSI_M_Values(data);
 
     }
 
     private static void list_Of_RF_RSSI_M_Values(String data) {
-        System.out.println("Not yet implemented");
+        final String RSSI = "\\b(?iU:[0-9a-f]{16})\\b|(-[1-9]*\\.[0-9]*)";
+        Pattern pattern = Pattern.compile(RSSI);
+        System.out.println("\n- List of RF_RSSI_M values for each MAC address\n");
+        Matcher matcher = pattern.matcher(data);
+        while (matcher.find()) {
+            System.out.printf("%s", matcher.group());
+            matcher.find();
+            System.out.printf(" %s%n", matcher.group());
+        }
     }
 
     private static void list_Of_MAC_Addresses(String data) {
@@ -72,7 +80,7 @@ public class Lesson2RegEx {
         Pattern pattern = Pattern.compile(PANID);
         System.out.printf("- List of PAN IDs (Total of %d): %n",
                 pattern.matcher(data).results().map(MatchResult::group).count());
-        pattern.matcher(data)
+        pattern.matcher(data.replaceAll("\\s+", " "))
                 .results()
                 .map(MatchResult::group)
                 .forEach(System.out::println);
