@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * The Lesson2RegEx class implements a number of methods which can be invoked to
- * parse  data stored  in a text file. The  name of the file to parse must to be
+ * parse  data  stored in  a text file.  The name  of the file  to parse must be
  * passed  to  the program  as a  commandline argument.  When invoked without an
  * argument,  the program displays an error message and a command syntax summary
  * on  the  console. Lesson2RegEx  uses regular  expressions in conjunction with
