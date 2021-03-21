@@ -16,30 +16,30 @@ import java.util.regex.Pattern;
  * Java's  Pattern and  Matcher classes  (java.util.regex) to  extract character
  * sequences  from  the data.  When  invoked,  Lesson2RegEx generates  a  report
  * resembling the following:
- *
+ * <p>
  * Processed the following input file:
  * neighbor-dump.txt
  * Results are as follows:
- *
+ * <p>
  * - List of PANIDs (Total of 2):
- *
+ * <p>
  * PANID = 04fa
  * PANID = 329d
- *
+ * <p>
  * - List of MAC addresses (Total of 4):
- *
+ * <p>
  * 000781fe0000326f
  * 000781fe0000614e
  * 000781fe00002f76
  * 000781fe0000313e
- *
+ * <p>
  * - List of RF_RSSI_M values for each MAC address
- *
+ * <p>
  * 000781fe0000326f -51.984
  * 000781fe0000614e -24.294
  * 000781fe00002f76 -25.5
  * 000781fe0000313e -36.953
- *
+ * <p>
  * The  regular expression "PANID\\s+=\\s+[0-9a-f]{4}" is used to find character
  * sequences  in the data that match the pattern. This pattern matches sequences
  * of  characters beginning  with the letters P-A-N-I-D, followed by one or more
@@ -47,14 +47,14 @@ import java.util.regex.Pattern;
  * (\\s+)  and  ending in  any four  hexadecimal digits ([0-9a-f]{4}). Sequences
  * matching this pattern represent PANIDs, and are listed on individual lines in
  * the first section of the report.
- *
+ * <p>
  * The  regular  expression "\\b([0-9a-f]{16})\\b"  is  used  to find  character
  * sequences  in the data that match the pattern. This pattern matches sequences
  * of   characters  consisting  of  sixteen  hexadecimal  digits  ([0-9a-f]{16})
  * surrounded  by  "non-word" characters  (\\b…  \\b).  Sequences matching  this
  * pattern  represent  MAC addresses, and are  listed on individual lines in the
  * middle section of the report.
- *
+ * <p>
  * The regular expression "\\b[0-9a-f]{16}\\b|(-[1-9]*\\.[0-9]*" is used to find
  * character  sequences in the data that match either pattern. The bar character
  * (|)  in  this expression  is  the  "or"  operator.  It means  that  character
@@ -63,21 +63,22 @@ import java.util.regex.Pattern;
  * consisting  of  sixteen hexadecimal digits ([0-9a-f]{16}) surrounded by "non-
  * word"  characters (\\b…\\b).  Sequences matching  this pattern  represent MAC
  * addresses.
- *
+ * <p>
  * The  expression to  the  right  of the  "or"  operator  will match  character
  * sequences  that  begin with  a hyphen  (-), followed by  any number of digits
  * between  one and  nine inclusive ([1-9]*), followed by a decimal point (\\.),
  * followed  by  any number of digits  between zero and nine inclusive ([0-9]*).
  * Sequences matching this pattern represent RSSI values.
- *
+ * <p>
  * MAC  addresses  and their corresponding  RSSI values are listed on individual
  * lines in the last section of the report.
  *
  * @author Edgar Cole
- *
  */
 
 public class Lesson2RegEx {
+
+    static int index = 0;
 
     public void syntaxSummary() {
         var commandName = getClass().getSimpleName();
@@ -123,15 +124,14 @@ public class Lesson2RegEx {
     }
 
     private static void list_Of_RF_RSSI_M_Values(String data) {
-        final String RSSI = "\\b[0-9a-f]{16}\\b|-[1-9]*\\.[0-9]*";
+        final String LINE_SEPARATOR = System.getProperty("line.separator");
+        final String RSSI = "(\\b[0-9a-f]{16}\\b)|(-[1-9]*\\.[0-9]*)";
         Pattern pattern = Pattern.compile(RSSI);
         System.out.println("\n- List of RF_RSSI_M values for each MAC address\n");
-        Matcher matcher = pattern.matcher(data);
-        while (matcher.find()) {
-            System.out.printf("%s", matcher.group());
-            matcher.find();
-            System.out.printf(" %s%n", matcher.group());
-        }
+        pattern.matcher(data)
+                .results()
+                .map(MatchResult::group)
+                .forEach(x -> System.out.print(index++ % 2 != 0 ? x + LINE_SEPARATOR : x + " "));
     }
 
     private static void list_Of_MAC_Addresses(String data) {
